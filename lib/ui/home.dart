@@ -38,10 +38,46 @@ class movieListview extends StatelessWidget {
           shadowColor: Colors.red,
               color: Colors.lightGreen,
           child: ListTile(
+            leading: CircleAvatar(
+              child: Container(
+                decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(13.9),
+                ),
+                child: Text("H"),
+              ),
+            ),
             title: Text(movies[index],style: TextStyle(color: Colors.white),),
+            subtitle: Text("Hollywood Movie",style: TextStyle(color: Colors.grey)),
+            trailing: Text("..."),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> MovieListViewDetails())),
           ),
         );
       }),
     );
   }
 }
+class MovieListViewDetails extends StatelessWidget {
+  const MovieListViewDetails({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Movies"),
+          centerTitle: true,
+          backgroundColor: Colors.grey.shade900,
+      ),
+      body: Center(
+        child: Container(
+          child: ElevatedButton(
+              onPressed: ()=>{
+               Navigator.pop(context)
+          },
+              child: Text("Back"))
+        ),
+      ),
+      
+    );
+  }
+}
+
