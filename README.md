@@ -5,7 +5,7 @@ A new Flutter project.This is a Flutter Intermediate Concepts Project(Navigation
 ## Getting Started
 
 This project is a starting point for a Flutter application.
-Createing ListView.builder(),Card,Listtile,New Route/Screen.
+- Createing ListView.builder(),Card,Listtile,New Route/Screen.
 Going to new screen using "Navigator.push()"method.MaterialPageRoute.
 Back screen:"Navigator.pop()"method.     
 
