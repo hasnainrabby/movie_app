@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/model/movie.dart';
+
 
 class movieListview extends StatelessWidget {
+
+  final List<Movie> movieList = Movie.getMovies();
 
   final List movies = [
     "Avatar",
@@ -31,7 +35,7 @@ class movieListview extends StatelessWidget {
       backgroundColor: Colors.blueGrey.shade400,
       body:
       ListView.builder(
-          itemCount: movies.length,
+          itemCount: movieList.length,
           itemBuilder: (BuildContext context,int index) {
         return Card(
           elevation: 50,
@@ -40,24 +44,39 @@ class movieListview extends StatelessWidget {
           child: ListTile(
             leading: CircleAvatar(
               child: Container(
+                width: 200,
+                height: 200,
                 decoration: BoxDecoration(
                  borderRadius: BorderRadius.circular(13.9),
+                  image: DecorationImage(
+                      image: NetworkImage(movieList[index].images[0]),
+                          fit: BoxFit.cover
+
+                  )
                 ),
-                child: Text("H"),
+                child: null,
               ),
             ),
-            title: Text(movies[index],style: TextStyle(color: Colors.white),),
-            subtitle: Text("Hollywood Movie",style: TextStyle(color: Colors.grey)),
+            title: Text(movieList[index].title,style: TextStyle(color: Colors.white),),
+            subtitle: Text("${movieList[index].director}",style: TextStyle(color: Colors.grey)),
             trailing: Text("..."),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> MovieListViewDetails())),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> MovieListViewDetails(movieName: movieList[index].title,
+              movie: movieList[index],))),
           ),
         );
       }),
     );
   }
 }
+
 class MovieListViewDetails extends StatelessWidget {
-  const MovieListViewDetails({Key? key}) : super(key: key);
+
+  final String movieName;
+  final Movie movie;
+
+
+  const MovieListViewDetails({super.key, required this.movieName, required this.movie});
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +92,7 @@ class MovieListViewDetails extends StatelessWidget {
               onPressed: ()=>{
                Navigator.pop(context)
           },
-              child: Text("Back"))
+              child: Text("Back ${this.movie.language}"))
         ),
       ),
       
