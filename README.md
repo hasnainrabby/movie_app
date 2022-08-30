@@ -8,6 +8,8 @@ This project is a starting point for a Flutter application.
 - Createing ListView.builder(),Card,Listtile,New Route/Screen.
 - Going to new screen using "Navigator.push()"method.MaterialPageRoute.
 - Back screen:"Navigator.pop()"method.     
+- Create Model class "Movie" & Passing movie object details.
+- Adding Image.
 
 A few resources to get you started if this is your first Flutter project:
 
