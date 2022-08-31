@@ -115,15 +115,11 @@ class movieListview extends StatelessWidget {
                        Text(movie.language,style: mainTextStyle()),
                        Text(movie.type,style: mainTextStyle()),
                        Text(movie.runtime,style: mainTextStyle()),
-
-
                      ],
                    ),
-
                  ],
                ),
              ),
-
          ),
        ),
      ),
@@ -176,17 +172,50 @@ class MovieListViewDetails extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.grey.shade900,
       ),
-      body: Center(
-        child: Container(
-          child: ElevatedButton(
-              onPressed: ()=>{
-               Navigator.pop(context)
-          },
-              child: Text("Back ${this.movie.language}"))
-        ),
-      ),
+       body: ListView(
+         children: [
+            movieDetailsThumnail(thumnail: movie.images[1])
+         ],
+       )
+      // Center(
+      //   child: Container(
+      //     child: ElevatedButton(
+      //         onPressed: ()=>{
+      //          Navigator.pop(context)
+      //     },
+      //         child: Text("Back ${this.movie.language}"))
+      //   ),
+      // ),
       
     );
   }
 }
+class movieDetailsThumnail extends StatelessWidget {
+  final String thumnail;
+  const movieDetailsThumnail({Key? key, required this.thumnail}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: NetworkImage(thumnail),
+                fit: BoxFit.cover),
+              ),
+            ),
+            Icon(Icons.play_circle_fill_outlined,size: 100,color: Colors.white70,)
+          ],
+        )
+      ],
+    );
+  }
+}
+
 
