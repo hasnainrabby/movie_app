@@ -37,7 +37,8 @@ class movieListview extends StatelessWidget {
       ListView.builder(
           itemCount: movieList.length,
           itemBuilder: (BuildContext context,int index) {
-        return Card(
+            return movieCard(movieList[index], context);
+       /* return Card(
           elevation: 50,
           shadowColor: Colors.red,
               color: Colors.lightGreen,
@@ -63,9 +64,47 @@ class movieListview extends StatelessWidget {
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> MovieListViewDetails(movieName: movieList[index].title,
               movie: movieList[index],))),
           ),
-        );
+        );*/
       }),
     );
+  }
+
+  Widget movieCard(Movie movie,BuildContext context){
+ return InkWell(
+   child: Container(
+     width: MediaQuery.of(context).size.width,          //for all type of device
+     height: 120.0,
+     child: Card(
+       color: Colors.black12,
+       child: Padding(
+         padding: const EdgeInsets.only(top: 8.0,bottom: 8.0,left: 54.0,right: 8.0),
+         child: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
+           children: [
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text(movie.title),
+                 Text("Rating: ${movie.imdbRating} /10")
+               ],
+             ),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+               children: [
+                 Text("Released: ${movie.released}"),
+                 Text(movie.language),
+                 Text(movie.runtime),
+
+               ],
+             ),
+
+           ],
+         ),
+       ),
+     ),
+   ),
+ );
   }
 }
 
