@@ -30,14 +30,24 @@ class movieListview extends StatelessWidget {
       appBar: AppBar(
         title: Text("Movies"),
         centerTitle: true,
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.blueGrey.shade900,
       ),
-      backgroundColor: Colors.blueGrey.shade400,
+      backgroundColor: Colors.blueGrey.shade900,
       body:
       ListView.builder(
           itemCount: movieList.length,
           itemBuilder: (BuildContext context,int index) {
-            return movieCard(movieList[index], context);
+            return Stack(
+              children: [
+                movieCard(movieList[index], context),
+                Positioned(
+                    top: 10.0,
+                    left: 10.0,
+                    child: movieImage(movieList[index].images[0])),
+
+              ]);
+
+
        /* return Card(
           elevation: 50,
           shadowColor: Colors.red,
@@ -72,39 +82,80 @@ class movieListview extends StatelessWidget {
   Widget movieCard(Movie movie,BuildContext context){
  return InkWell(
    child: Container(
+     margin: EdgeInsets.only(left: 50.0),
      width: MediaQuery.of(context).size.width,          //for all type of device
      height: 120.0,
      child: Card(
        color: Colors.black12,
        child: Padding(
          padding: const EdgeInsets.only(top: 8.0,bottom: 8.0,left: 54.0,right: 8.0),
-         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           mainAxisAlignment: MainAxisAlignment.spaceAround,
-           children: [
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Text(movie.title),
-                 Text("Rating: ${movie.imdbRating} /10")
-               ],
-             ),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               children: [
-                 Text("Released: ${movie.released}"),
-                 Text(movie.language),
-                 Text(movie.runtime),
+         child: Center(
+             child: Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                 children: [
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Flexible(
+                         child: Text(movie.title,
+                           style: TextStyle(fontSize: 16.0,
+                               fontWeight: FontWeight.bold,
+                               color: Colors.white),),
+                       ),
+                       Text("Rating: ${movie.imdbRating} /10",style: mainTextStyle())
+                     ],
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                     children: [
+                       //Text("Released: ${movie.released}"),
+                       Text(movie.language,style: mainTextStyle()),
+                       Text(movie.type,style: mainTextStyle()),
+                       Text(movie.runtime,style: mainTextStyle()),
 
-               ],
+
+                     ],
+                   ),
+
+                 ],
+               ),
              ),
 
-           ],
          ),
        ),
      ),
    ),
+   onTap: () => {
+     Navigator.push(context, MaterialPageRoute(builder: (context) => MovieListViewDetails(movieName: movie.title, movie: movie)))
+   }
  );
+  }
+  TextStyle mainTextStyle(){
+    return const TextStyle(
+        fontSize: 15.0,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey
+
+    );
+  }
+
+
+  Widget movieImage(String imageUrl){
+return Container(
+  width: 100.0,
+  height: 100.0,
+  decoration: BoxDecoration(
+    shape: BoxShape.circle,
+    image: DecorationImage(image: NetworkImage(imageUrl),
+        fit:BoxFit.cover
+      
+    )
+  ),
+
+);
   }
 }
 
