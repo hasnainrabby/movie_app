@@ -174,7 +174,8 @@ class MovieListViewDetails extends StatelessWidget {
       ),
        body: ListView(
          children: [
-            movieDetailsThumnail(thumnail: movie.images[1])
+            movieDetailsThumbnail(thumbnail: movie.images[1]),
+           movieDetailsHeaderwithPoster(movie: movie)
          ],
        )
       // Center(
@@ -190,9 +191,9 @@ class MovieListViewDetails extends StatelessWidget {
     );
   }
 }
-class movieDetailsThumnail extends StatelessWidget {
-  final String thumnail;
-  const movieDetailsThumnail({Key? key, required this.thumnail}) : super(key: key);
+class movieDetailsThumbnail extends StatelessWidget {
+  final String thumbnail;
+  const movieDetailsThumbnail({Key? key, required this.thumbnail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -206,16 +207,67 @@ class movieDetailsThumnail extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 200,
               decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(thumnail),
+                image: DecorationImage(image: NetworkImage(thumbnail),
                 fit: BoxFit.cover),
               ),
             ),
             Icon(Icons.play_circle_fill_outlined,size: 100,color: Colors.white70,)
           ],
+        ),
+        Container(
+          height:80.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [Color(
+                0xdefeded),Color(0xfff5f5f5),],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.clamp)
+          ),
         )
       ],
     );
   }
 }
+
+class movieDetailsHeaderwithPoster extends StatelessWidget {
+  final Movie movie;
+  const movieDetailsHeaderwithPoster({Key? key, required this.movie}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),   //symmetric use for vertical & horizontal padding.
+    child: Row(
+      children: [
+        moviePoster(poster: movie.images[2])
+      ],
+    ));
+  }
+}
+class moviePoster extends StatelessWidget {
+  final String poster;
+  const moviePoster({Key? key, required this.poster}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ClipRRect(                                                          //for rounded rectangular clip
+        borderRadius: BorderRadius.circular(5.0),
+        clipBehavior: Clip.antiAlias,
+        child: Container(
+          width: MediaQuery.of(context).size.width/4 ,
+          height: 160.0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(poster),
+              fit: BoxFit.cover
+            )
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
 
