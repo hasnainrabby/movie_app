@@ -155,6 +155,8 @@ return Container(
   }
 }
 
+//Route/New Screen
+
 class MovieListViewDetails extends StatelessWidget {
 
   final String movieName;
@@ -174,8 +176,9 @@ class MovieListViewDetails extends StatelessWidget {
       ),
        body: ListView(
          children: [
-            movieDetailsThumbnail(thumbnail: movie.images[1]),
-            movieDetailsHeaderwithPoster(movie: movie)
+            MovieDetailsThumbnail(thumbnail: movie.images[1]),
+            MovieDetailsHeaderwithPoster(movie: movie),
+            MovieDetailsCast(movie: movie)
          ],
        )
       // Center(
@@ -191,9 +194,9 @@ class MovieListViewDetails extends StatelessWidget {
     );
   }
 }
-class movieDetailsThumbnail extends StatelessWidget {
+class MovieDetailsThumbnail extends StatelessWidget {
   final String thumbnail;
-  const movieDetailsThumbnail({Key? key, required this.thumbnail}) : super(key: key);
+  const MovieDetailsThumbnail({Key? key, required this.thumbnail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -229,26 +232,26 @@ class movieDetailsThumbnail extends StatelessWidget {
   }
 }
 
-class movieDetailsHeaderwithPoster extends StatelessWidget {
+class MovieDetailsHeaderwithPoster extends StatelessWidget {
   final Movie movie;
-  const movieDetailsHeaderwithPoster({Key? key, required this.movie}) : super(key: key);
+  const MovieDetailsHeaderwithPoster({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),   //symmetric use for vertical & horizontal padding.
     child: Row(
       children: [
-        moviePoster(poster: movie.images[2].toString()),
+        MoviePoster(poster: movie.images[2].toString()),
         SizedBox(
-          width: 16,),
-        Expanded(child: movieDetailsHeader(movie: movie))
+          width: 16),
+        Expanded(child: MovieDetailsHeader(movie: movie))
       ],
     ));
   }
 }
-class moviePoster extends StatelessWidget {
+class MoviePoster extends StatelessWidget {
   final String poster;
-  const moviePoster({Key? key, required this.poster}) : super(key: key);
+  const MoviePoster({Key? key, required this.poster}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -271,9 +274,9 @@ class moviePoster extends StatelessWidget {
   }
 }
 
-class  movieDetailsHeader extends StatelessWidget {
+class  MovieDetailsHeader extends StatelessWidget {
   final Movie movie;
-  const  movieDetailsHeader({Key? key, required this.movie}) : super(key: key);
+  const  MovieDetailsHeader({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +286,8 @@ class  movieDetailsHeader extends StatelessWidget {
         Text("${movie.year} . ${movie.genre}".toUpperCase(),
           style: TextStyle(fontWeight: FontWeight.w400, color: Colors.cyan)),
         Text(movie.title,style:TextStyle(fontWeight: FontWeight.w900, fontSize: 30)),
-        Text.rich(TextSpan(style: TextStyle(fontSize: 13,fontWeight: FontWeight.w300),
+        Text.rich(TextSpan(style: TextStyle(fontSize: 13,fontWeight: FontWeight.w300),  //Depending on the layout constraints
+                                                                                        // the text might break across multiple lines or might all be displayed on the same line.
         children: [
           TextSpan(text: movie.plot),
           TextSpan(text: "More...",style: TextStyle(color: Colors.blueAccent))
@@ -293,6 +297,46 @@ class  movieDetailsHeader extends StatelessWidget {
     );
   }
 }
+
+class MovieDetailsCast extends StatelessWidget {
+  final Movie movie;
+  const MovieDetailsCast({Key? key, required this.movie}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+            MovieField(field: "Cast", value: movie.actors),
+            MovieField(field: "Director", value: movie.director),
+            MovieField(field: "Awards", value: movie.awards),
+        ],
+      ),
+    );
+  }
+}
+class MovieField extends StatelessWidget {
+  final String field,value;
+  const MovieField({Key? key, required this.field, required this.value}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("$field : ",style: TextStyle(color: Colors.black45,
+            fontSize: 12,fontWeight: FontWeight.w300),),
+        Flexible(
+          child: Text(value ,style: TextStyle(color: Colors.black,
+              fontSize: 12,fontWeight: FontWeight.w300),),
+        )
+      ],
+    );
+  }
+}
+
+
 
 
 
