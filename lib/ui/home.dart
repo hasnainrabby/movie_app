@@ -178,7 +178,10 @@ class MovieListViewDetails extends StatelessWidget {
          children: [
             MovieDetailsThumbnail(thumbnail: movie.images[1]),
             MovieDetailsHeaderwithPoster(movie: movie),
-            MovieDetailsCast(movie: movie)
+            HorizontalLine(),
+            MovieDetailsCast(movie: movie),
+            HorizontalLine(),
+            MovieDetailsMorePoster(posters: movie.images)
          ],
        )
       // Center(
@@ -208,7 +211,7 @@ class MovieDetailsThumbnail extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 200,
+              height: 180,
               decoration: BoxDecoration(
                 image: DecorationImage(image: NetworkImage(thumbnail),
                 fit: BoxFit.cover),
@@ -311,6 +314,7 @@ class MovieDetailsCast extends StatelessWidget {
             MovieField(field: "Cast", value: movie.actors),
             MovieField(field: "Director", value: movie.director),
             MovieField(field: "Awards", value: movie.awards),
+            MovieField(field: "Country", value: movie.country),
         ],
       ),
     );
@@ -335,6 +339,63 @@ class MovieField extends StatelessWidget {
     );
   }
 }
+
+class HorizontalLine extends StatelessWidget {
+  const HorizontalLine({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 12.0),
+      child: Container(
+        height: 0.5,
+        color: Colors.grey,
+      ),
+    );
+  }
+}
+
+class MovieDetailsMorePoster extends StatelessWidget {
+  final List<String> posters;
+  const MovieDetailsMorePoster({Key? key, required this.posters}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 2.0),
+          child: Text("More Movie posters".toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.w300,fontSize: 14,color: Colors.black45), ),
+        ),
+        Container(
+          height: 180,
+          padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 12.0),
+          child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (context,index) => SizedBox(width: 12.0,),
+              itemCount: posters.length,
+              itemBuilder:(context,index) => ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                child: Container(
+                  width: MediaQuery.of(context).size.width/4,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(image: NetworkImage(posters[index]),
+                    fit: BoxFit.cover)
+                  ),
+                ),
+              )
+          ),
+        ),
+
+      ],
+    );
+  }
+}
+
+
 
 
 
