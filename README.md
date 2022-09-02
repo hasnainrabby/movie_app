@@ -11,7 +11,7 @@ This project is a starting point for a Flutter application.
 - Create Model class "Movie" & Passing movie object details.
 - Adding Image.
 - Customized Row
-- Details Route: Adding Movie Thumbnail.
+- Details Route: Adding Movie Thumbnail,Adding Gradient,Adding Movie Poster using ClipRRect widget.
 
 A few resources to get you started if this is your first Flutter project:
 
