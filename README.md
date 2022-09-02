@@ -12,6 +12,7 @@ This project is a starting point for a Flutter application.
 - Adding Image.
 - Customized Row
 - Details Route: Adding Movie Thumbnail,Adding Gradient,Adding Movie Poster using ClipRRect widget.Adding Movie Header(Richtext,Textspan,Sizedbox Concept),Movie Field,Horizontal line,Bottom movie poster using ListView.separete
+- Finished App
 
 A few resources to get you started if this is your first Flutter project:
 
