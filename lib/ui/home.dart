@@ -101,7 +101,7 @@ class movieListview extends StatelessWidget {
                      children: [
                        Flexible(
                          child: Text(movie.title,
-                           style: TextStyle(fontSize: 16.0,
+                           style: const TextStyle(fontSize: 16.0,
                                fontWeight: FontWeight.bold,
                                color: Colors.white),),
                        ),
@@ -175,7 +175,7 @@ class MovieListViewDetails extends StatelessWidget {
        body: ListView(
          children: [
             movieDetailsThumbnail(thumbnail: movie.images[1]),
-           movieDetailsHeaderwithPoster(movie: movie)
+            movieDetailsHeaderwithPoster(movie: movie)
          ],
        )
       // Center(
@@ -211,12 +211,12 @@ class movieDetailsThumbnail extends StatelessWidget {
                 fit: BoxFit.cover),
               ),
             ),
-            Icon(Icons.play_circle_fill_outlined,size: 100,color: Colors.white70,)
+            const Icon(Icons.play_circle_fill_outlined,size: 100,color: Colors.white70,)
           ],
         ),
         Container(
           height:80.0,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [Color(
                 0xdefeded),Color(0xfff5f5f5),],
             begin: Alignment.topCenter,
@@ -238,7 +238,10 @@ class movieDetailsHeaderwithPoster extends StatelessWidget {
     return Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),   //symmetric use for vertical & horizontal padding.
     child: Row(
       children: [
-        moviePoster(poster: movie.images[2])
+        moviePoster(poster: movie.images[2].toString()),
+        SizedBox(
+          width: 16,),
+        Expanded(child: movieDetailsHeader(movie: movie))
       ],
     ));
   }
@@ -267,6 +270,30 @@ class moviePoster extends StatelessWidget {
     );
   }
 }
+
+class  movieDetailsHeader extends StatelessWidget {
+  final Movie movie;
+  const  movieDetailsHeader({Key? key, required this.movie}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("${movie.year} . ${movie.genre}".toUpperCase(),
+          style: TextStyle(fontWeight: FontWeight.w400, color: Colors.cyan)),
+        Text(movie.title,style:TextStyle(fontWeight: FontWeight.w900, fontSize: 30)),
+        Text.rich(TextSpan(style: TextStyle(fontSize: 13,fontWeight: FontWeight.w300),
+        children: [
+          TextSpan(text: movie.plot),
+          TextSpan(text: "More...",style: TextStyle(color: Colors.blueAccent))
+        ]))
+
+      ],
+    );
+  }
+}
+
 
 
 
